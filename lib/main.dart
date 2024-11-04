@@ -8,11 +8,11 @@ class MainApp extends StatefulWidget {
   const MainApp({super.key});
 
   @override
-  State<MainApp> createState() => _MainAppState();
+  State<MainApp> createState() => MainAppState();
 }
 
-class _MainAppState extends State<MainApp> {
-  final String strGo = "Go";
+class MainAppState extends State<MainApp> {
+  String strGo = "Go";
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,14 @@ class _MainAppState extends State<MainApp> {
             children: [
               Text(strGo),
               const SizedBox(height: 20),
-              ElevatedButton(onPressed: () {}, child: const Text("pres me")),
+              ElevatedButton(
+                  onPressed: () async {
+                    String gogogo = await tripleString(strGo);
+                    setState(() {
+                      strGo = gogogo;
+                    });
+                  },
+                  child: const Text("pres me")),
             ],
           ),
         ),
@@ -33,6 +40,7 @@ class _MainAppState extends State<MainApp> {
   }
 }
 
-String tripleString(String str) {
+Future<String> tripleString(String str) async {
+  await Future.delayed(const Duration(seconds: 2));
   return str * 3;
 }
